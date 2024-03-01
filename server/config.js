@@ -12,5 +12,7 @@ db.set('logs', {
     warn: []
 });
 db.set('settings', {
+    localisation: 'ua',
+    tovarLayout: 'grid',
     category: []
 });

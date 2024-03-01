@@ -1,6 +1,6 @@
 import React from 'react';
 import "./lib/engine";
-import globalState, { flags } from "./global.state";
+import globalState, { flags, user } from "./global.state";
 import { useHookstate } from '@hookstate/core';
 import { createRoot } from 'react-dom/client'
 import "primereact/resources/themes/luna-blue/theme.css";
@@ -14,10 +14,14 @@ import Header from "./component/header";
 import BodyFavorite from "./component/body";
 import Auth from "./component/auth";
 
+const components = {
+    base: <BodyFavorite />,
+    category: <TovarList />
+}
 
 
 function App() {
-    const [view, setView] = React.useState();
+    const view = useHookstate(flags.view);
     const toast = React.useRef(null);
 
     const showToast =(type, title, text)=> {
@@ -30,8 +34,12 @@ function App() {
     }
     useDidMount(()=> {
         EVENT.on('info', (detail)=> showToast(detail.type, detail.title, detail.text));
-        //send('verifu', {}).then(globalState.user.set);
-        ///send('getShopingCart', {}).then(globalState.shopingCart.set);
+        send('getShop', {}).then((res)=> {
+            globalState.settings.set(res.settings);
+            globalState.products.set(res.products);
+            globalState.shopingCart.set(res.shopingCart);
+        });
+        //send('verifu', {}).then(user.set);
     });
 
 
@@ -40,7 +48,10 @@ function App() {
             <Toast position="bottom-left" ref={toast} />
             <Auth /> 
             <Header />
-            { view }
+            { components[view.get()] }
+            <footer style={{textAlign:"center",backgroundColor:"black",marginTop:'3px'}}>
+                © {globalState.settings.cooper.get() } { new Date().getFullYear() }
+            </footer>
         </React.Fragment>
     );
 }

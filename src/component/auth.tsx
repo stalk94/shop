@@ -1,6 +1,6 @@
 import React from 'react';
 import "../style/auth.css";
-import globalState, { flags } from "../global.state";
+import globalState, { flags, user } from "../global.state";
 import { useHookstate } from '@hookstate/core';
 import { InputText } from 'primereact/inputtext';
 import { Dialog } from 'primereact/dialog';
@@ -12,18 +12,16 @@ import { useInfoToolbar } from "../function";
 export default function BaseContainer() {
     const state = useHookstate(flags);
     const [login, setLogin] = React.useState<string>();
-    const [email, setEmail] = React.useState<string>();
     const [telephone, setTelephone] = React.useState<string>();
     const [password, setPassword] = React.useState<string>();
 
     const authUser =()=> {
-        send(state.viewAuthType.get(), {login:login,password:password,email:email,telephone:telephone}).then((res)=> {
+        send(state.viewAuthType.get(), {login:login,password:password,telephone:telephone}).then((res)=> {
             if(res.error) useInfoToolbar("error", 'Ошибка', res.error);
             else {
-                if(state.viewAuthType.get()==='auth') globalState.user.set(res);
+                if(state.viewAuthType.get()==='auth') user.set(res);
                 else useInfoToolbar("success", 'Регистрация успешна', 'Теперь войдите в систему');
                 setLogin();
-                setEmail();
                 setPassword();
                 setTelephone();
                 state.viewAuth.set(false);
@@ -47,26 +45,22 @@ export default function BaseContainer() {
             }
         >
             <div className="column">
+                <div className="field">
+                    <label style={{marginLeft:"5px",color:"gray"}} htmlFor="perm">e-mail</label>
+                    <InputText value={login} onChange={(ev)=> setLogin(ev.target.value)} placeholder='test@gm.ru'/>
+                </div>
+                <div className="field">
+                    <label style={{marginLeft:"5px",color:"gray"}} htmlFor="perm">password</label>
+                    <input className='p-inputtext p-component' type='password' value={password} onChange={(ev)=> setPassword(ev.target.value)} placeholder='min 6'/>
+                </div>
                 {state.viewAuthType.get()==='reg' && 
                     <>
-                    <div className="field">
-                        <label style={{marginLeft:"5px",color:"gray"}} htmlFor="perm">e-mail</label>
-                        <InputText keyfilter='email' value={email} onChange={(ev)=> setEmail(ev.target.value)} placeholder='test@gm.ru'/>
-                    </div>
                     <div className="field">
                         <label style={{marginLeft:"5px",color:"gray"}} htmlFor="perm">Номер телефона</label>
                         <InputText value={telephone} onChange={(ev)=> setTelephone(ev.target.value)} placeholder='+00000000000'/>
                     </div>
                     </>
                 }
-                <div className="field">
-                    <label style={{marginLeft:"5px",color:"gray"}} htmlFor="perm">login</label>
-                    <InputText name="login" value={login} onChange={(ev)=> setLogin(ev.target.value)} placeholder='min 5'/>
-                </div>
-                <div className="field">
-                    <label style={{marginLeft:"5px",color:"gray"}} htmlFor="perm">password</label>
-                    <input className='p-inputtext p-component' type='password' value={password} onChange={(ev)=> setPassword(ev.target.value)} placeholder='min 6'/>
-                </div>
             </div>
         </Dialog>
     );

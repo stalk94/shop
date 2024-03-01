@@ -54,12 +54,36 @@ app.post("/reg", async(req, res)=> {
 
     res.send(result);
 });
-app.post("/getShopData", async(req, res)=> {
-    res.send(await db.get('products'));
+app.post("/out", async(req, res)=> {
+    await sessionList.remove(req.body.login);
+
+    res.send({});
 });
-app.post("/setShopingCart", async(req, res)=> {
-    sessionList.setShopingCart(req.session.id, req.body.shopingCart);
+app.post("/getShop", async(req, res)=> {
+    res.send({
+        products: await db.get('products'),
+        settings: await db.get('settings'),
+        shopingCart: await sessionList.getShopingCart(req.session.id)
+    });
+});
+app.post("/delShopingCart", async(req, res)=> {
+    const id = req.body.product.id;
+    const list = await sessionList.getShopingCart(req.session.id);
+
+    if(req.body.product!=='all'){
+        if(id) await sessionList.setShopingCart(req.session.id, list.filter((elem)=> elem.id!==id));
+    }
+    else await sessionList.setShopingCart(req.session.id, []);
+
     res.send(await sessionList.getShopingCart(req.session.id));
+});
+app.post("/addShopingCart", async(req, res)=> {
+    if(req.body.product){
+        const products = [...await sessionList.getShopingCart(req.session.id), req.body.product];
+        await sessionList.setShopingCart(req.session.id, products);
+        res.send(await sessionList.getShopingCart(req.session.id));
+    }
+    else res.send({error: 'not product'});
 });
 app.post("/getShopingCart", async(req, res)=> {
     res.send(await sessionList.getShopingCart(req.session.id));

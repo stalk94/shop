@@ -1,12 +1,25 @@
 import { hookstate } from '@hookstate/core';
 
 
-
 export default hookstate({
     logo: undefined,
-    localisation: 'ua',
     settings: {
-        tovarLayout: 'grid'
+        localisation: 'ua',
+        tovarLayout: 'grid',
+        cooper: 'newCompany',
+        category: [{
+            label: 'Главная',
+           
+        },{
+            label: 'Авто',
+            icon: 'pi pi-fw pi-car'
+        },{
+            label: 'Детали',
+            icon: 'pi pi-fw pi-wrench'
+        },{
+            label: 'Прочее',
+            icon: 'pi pi-fw pi-box'
+        }]
     },
     products: [{
         id: 1000,
@@ -19,7 +32,6 @@ export default hookstate({
         category: "Прочее",
         status: true
     }],
-    user: {},
     shopingCart: [{
         id: 1000,
         count: 1,
@@ -33,8 +45,16 @@ export default hookstate({
     }]
 });
 
+export const user = hookstate({
+    login: 'test',
+    telephone: '',
+    permision: 0,
+    pays: []
+});
+
 export const flags = hookstate({
-    viewShopingBar: false,
+    view: 'category',
+    category: undefined,
     viewAuth: false,
     viewAuthType: 'auth',
     bodyView: 'main'

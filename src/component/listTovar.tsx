@@ -1,35 +1,33 @@
 import React from 'react';
 import { Tovar } from "./type";
 import "../style/list.css";
-import globalState from "../global.state";
+import globalState, { flags } from "../global.state";
 import { useHookstate } from '@hookstate/core';
 import { DataView } from 'primereact/dataview';
 import { Button } from 'primereact/button';
-
-
-const localisation = {
-    ru: '₽',
-    ua: '₴',
-    br: 'Br'
-}
+import { useInfoToolbar } from "../function";
+const localisation = {ru: '₽', ua: '₴', br: 'Br'}
 
 
 
 export default function ListTovar() {
-    const products = useHookstate(globalState.products);
+    const category = useHookstate(flags.category);
+    const [products, setProducts] = React.useState([...globalState.products.get()]);
 
     const addShopCart =(data: Tovar)=> {
-
+        send('addShopingCart', {product: data}).then((res)=> {
+            if(res.error) useInfoToolbar("error", 'Ошибка', res.error);
+            else globalState.shopingCart.set(res);
+        });
     }
     const useDetailProduct =(data: Tovar)=> {
         
     }
-
     const renderList =(data: Tovar)=> {
         return (
             <div className="col-12">
                 <div className="product-list-item">
-                    <img src={`images/product/${data.image}`} onError={(e)=> e.target.src='https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} alt={data.name} />
+                    <img src={`images/product/${data.image}`} onError={(e)=> e.target.src='https://t3.ftcdn.net/jpg/05/03/24/40/360_F_503244059_fRjgerSXBfOYZqTpei4oqyEpQrhbpOML.jpg'} alt={data.name} />
                     <div className="product-list-detail">
                         <div className="product-name">{data.name}</div>
                         <div className="product-description">{data.description}</div>
@@ -37,7 +35,7 @@ export default function ListTovar() {
                     </div>
                     <div className="product-list-action">
                         <span className="product-price">
-                            ${data.price}
+                            {localisation[globalState.settings.localisation.get()]} {data.price}
                         </span>
                         <div style={{marginTop:"20%"}}>
                             <Button className='p-button-info p-button-outlined'
@@ -76,7 +74,7 @@ export default function ListTovar() {
                     </span>
                 </div>
                 <div className="product-grid-item-content">
-                    <img src={`images/product/${data.image}`} onError={(e)=> e.target.src='https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} alt={data.name} />
+                    <img src={`images/product/${data.image}`} onError={(e)=> e.target.src='https://t3.ftcdn.net/jpg/05/03/24/40/360_F_503244059_fRjgerSXBfOYZqTpei4oqyEpQrhbpOML.jpg'} alt={data.name} />
                     <div className="product-name">
                         {data.name}
                     </div>
@@ -86,7 +84,7 @@ export default function ListTovar() {
                 </div>
                 <div className="product-grid-item-bottom">
                     <span className="product-price">
-                        {localisation[globalState.localisation.get()]} {data.price}
+                        {localisation[globalState.settings.localisation.get()]} {data.price}
                     </span> 
                     <div>
                         <Button className='p-button-info p-button-outlined'
@@ -106,12 +104,16 @@ export default function ListTovar() {
             </div>
         </div>  
     );
+    React.useEffect(()=> {
+        const all = globalState.products.get();
+        if(category.get()) setProducts(all.filter(elem=> elem.category===category.get()));
+    }, [category]);
 
 
     return(
         <DataView 
             itemTemplate={(product, layout)=> layout==='grid' ? renderGrid(product) : renderList(product)}
-            value={products.get()} 
+            value={products} 
             layout={globalState.settings.tovarLayout.get()}
             paginator 
             rows={9}
