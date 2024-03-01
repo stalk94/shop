@@ -4,9 +4,10 @@ import store, { useLocalStorage } from "./rxStorage";
 
 globalThis.gurl = 'http://localhost:3000/';
 export const STORE = store.init(useLocalStorage());
-export const EVENT = new EventEmiter();
+globalThis.EVENT = new EventEmiter();
 
-export async function send(url, data, metod) {
+
+async function send(url, data, metod) {
     let dataServer = {
         method: metod ?? 'POST',
         credentials: 'same-origin',
@@ -19,3 +20,4 @@ export async function send(url, data, metod) {
     const request = await fetch(gurl + url, dataServer);
     return request.json();
 }
+globalThis.send = send;

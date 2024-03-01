@@ -1,6 +1,7 @@
 import React from 'react';
-import { send, EVENT } from "./lib/engine";
+import "./lib/engine";
 import globalState, { flags } from "./global.state";
+import { useHookstate } from '@hookstate/core';
 import { createRoot } from 'react-dom/client'
 import "primereact/resources/themes/luna-blue/theme.css";
 import "primereact/resources/primereact.min.css";
@@ -9,7 +10,6 @@ import 'primeflex/primeflex.css';
 import { useDidMount } from 'rooks';
 import { Toast } from 'primereact/toast';
 import TovarList from "./component/listTovar";
-import ShopingCart from "./component/shopingCart";
 import Header from "./component/header";
 import BodyFavorite from "./component/body";
 import Auth from "./component/auth";
@@ -19,7 +19,6 @@ import Auth from "./component/auth";
 function App() {
     const [view, setView] = React.useState();
     const toast = React.useRef(null);
-
 
     const showToast =(type, title, text)=> {
         toast.current.show({
@@ -31,8 +30,8 @@ function App() {
     }
     useDidMount(()=> {
         EVENT.on('info', (detail)=> showToast(detail.type, detail.title, detail.text));
-        send('verifu', {}).then(globalState.user.set);
-        send('getShopingCart', {}).then(globalState.shopingCart.set);
+        //send('verifu', {}).then(globalState.user.set);
+        ///send('getShopingCart', {}).then(globalState.shopingCart.set);
     });
 
 
@@ -41,7 +40,6 @@ function App() {
             <Toast position="bottom-left" ref={toast} />
             <Auth /> 
             <Header />
-            <ShopingCart />
             { view }
         </React.Fragment>
     );

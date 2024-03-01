@@ -3,6 +3,7 @@ import { hookstate } from '@hookstate/core';
 
 
 export default hookstate({
+    logo: undefined,
     localisation: 'ua',
     settings: {
         tovarLayout: 'grid'
@@ -19,11 +20,22 @@ export default hookstate({
         status: true
     }],
     user: {},
-    shopingCart: []
+    shopingCart: [{
+        id: 1000,
+        count: 1,
+        code: "f230fh0g3",
+        name: "Bamboo Watch",
+        description: "Product Description",
+        image: "bamboo-watch.jpg",
+        price: 65,
+        category: "Прочее",
+        status: true
+    }]
 });
 
 export const flags = hookstate({
-    viewShopingBar: true,
+    viewShopingBar: false,
     viewAuth: false,
-    viewAuthType: 'auth'
+    viewAuthType: 'auth',
+    bodyView: 'main'
 });

@@ -5,6 +5,7 @@ const cors = require("cors");
 const path = require("path");
 const sqlite = require("better-sqlite3");
 const session = require('express-session');
+const fileUpload = require('express-fileupload');
 const SqliteStore = require("better-sqlite3-session-store")(session);
 const { authVerifuSid, authVerifu, regUser } = require("./server/function");
 const sessionList = require("./server/sessionList");
@@ -29,6 +30,7 @@ app.use(session({
 }));
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
+app.use(fileUpload());
 const server = http.createServer(app);
 
 
@@ -62,7 +64,10 @@ app.post("/setShopingCart", async(req, res)=> {
 app.post("/getShopingCart", async(req, res)=> {
     res.send(await sessionList.getShopingCart(req.session.id));
 });
-
+app.post('/upload', (req, res)=> {
+    const { image } = req.files;
+    image.mv(__dirname + '/src/upload/' + image.name);
+});
 
 
 
