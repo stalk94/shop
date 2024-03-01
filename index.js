@@ -1,4 +1,4 @@
-//require("./server/dom");
+require("./server/loger");
 const http = require('http');
 const express = require('express');
 const cors = require("cors");

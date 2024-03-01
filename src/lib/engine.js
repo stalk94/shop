@@ -16,6 +16,6 @@ export async function send(url, data, metod) {
     }
     if(metod!=='GET') dataServer.body = JSON.stringify(data);
 
-    const request = await fetch(window.gurl + url, dataServer);
+    const request = await fetch(gurl + url, dataServer);
     return request.json();
 }

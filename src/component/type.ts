@@ -8,4 +8,5 @@ export type Tovar = {
     price: number
     category: string
     status: boolean
+    timeshtamp: string|number
 }

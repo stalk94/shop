@@ -21,3 +21,9 @@ export default hookstate({
     user: {},
     shopingCart: []
 });
+
+export const flags = hookstate({
+    viewShopingBar: true,
+    viewAuth: false,
+    viewAuthType: 'auth'
+});
