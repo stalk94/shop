@@ -127,3 +127,15 @@
     margin-bottom: 2rem;
     background-color: #bcb9b936;
 }
+.new {
+    background-color: #3ded077a
+}
+.empty {
+    background-color: #ed3d077d;
+}
+.action {
+    background-color: #e9ed077d;
+}
+.favorite {
+    background-color: #07d6ed7d;
+}

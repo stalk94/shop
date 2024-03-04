@@ -30,7 +30,37 @@ export default hookstate({
         image: "bamboo-watch.jpg",
         price: 65,
         category: "Прочее",
-        status: true
+        status: 'new'
+    },{
+        id: 1000,
+        count: 1,
+        code: "f230fh0g3",
+        name: "Bamboo Watch",
+        description: "Product Description",
+        image: "bamboo-watch.jpg",
+        price: 65,
+        category: "Прочее",
+        status: 'new'
+    },{
+        id: 1000,
+        count: 1,
+        code: "f230fh0g3",
+        name: "Bamboo Watch",
+        description: "Product Description",
+        image: "bamboo-watch.jpg",
+        price: 65,
+        category: "Прочее",
+        status: 'new'
+    },{
+        id: 1000,
+        count: 1,
+        code: "f230fh0g3",
+        name: "Bamboo Watch",
+        description: "Product Description",
+        image: "bamboo-watch.jpg",
+        price: 65,
+        category: "Прочее",
+        status: 'new'
     }],
     shopingCart: [{
         id: 1000,
@@ -53,7 +83,7 @@ export const user = hookstate({
 });
 
 export const flags = hookstate({
-    view: 'category',
+    view: 'base',
     category: undefined,
     viewAuth: false,
     viewAuthType: 'auth',

@@ -3,7 +3,6 @@ import store, { useLocalStorage } from "./rxStorage";
 
 
 globalThis.gurl = 'http://localhost:3000/';
-export const STORE = store.init(useLocalStorage());
 globalThis.EVENT = new EventEmiter();
 
 

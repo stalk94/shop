@@ -11,6 +11,7 @@ import { useDidMount } from 'rooks';
 import { Toast } from 'primereact/toast';
 import TovarList from "./component/listTovar";
 import Header from "./component/header";
+import Promo from "./component/footer";
 import BodyFavorite from "./component/body";
 import Auth from "./component/auth";
 
@@ -39,7 +40,7 @@ function App() {
             globalState.products.set(res.products);
             globalState.shopingCart.set(res.shopingCart);
         });
-        //send('verifu', {}).then(user.set);
+        send('verifu', {}).then(user.set);
     });
 
 
@@ -49,6 +50,7 @@ function App() {
             <Auth /> 
             <Header />
             { components[view.get()] }
+            <Promo />
             <footer style={{textAlign:"center",backgroundColor:"black",marginTop:'3px'}}>
                 © {globalState.settings.cooper.get() } { new Date().getFullYear() }
             </footer>
@@ -62,14 +64,3 @@ function App() {
 window.onload =()=> createRoot(document.querySelector(".root")).render(
     <App/>
 );
-
-
-/**  ! В продакшене врубить
- * window.onbeforeunload =(event)=> { 
-            event.preventDefault(); 
-            send("exit", {}).then((res)=> {
-                if(res.error) useInfoToolbar("error", "Error", res.error);
-                else console.log(res);
-            });
-        };
- */

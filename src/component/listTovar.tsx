@@ -12,7 +12,7 @@ const localisation = {ru: '₽', ua: '₴', br: 'Br'}
 
 export default function ListTovar() {
     const category = useHookstate(flags.category);
-    const [products, setProducts] = React.useState([...globalState.products.get()]);
+    const [products, setProducts] = React.useState(globalState.products.get());
 
     const addShopCart =(data: Tovar)=> {
         send('addShopingCart', {product: data}).then((res)=> {
@@ -69,12 +69,12 @@ export default function ListTovar() {
                             {data.category}
                         </span>
                     </div>
-                    <span className='product-category' style={{backgroundColor:data.status?'#3ded077a':'#ed3d077d'}}>
-                        {data.status?"В наличии":"Нет в наличии"}
+                    <span className={`product-category ${data.count<1?'empty': data.status}`}>
+                        {data.count<1?'Нет в наличии': data.status}
                     </span>
                 </div>
                 <div className="product-grid-item-content">
-                    <img src={`images/product/${data.image}`} onError={(e)=> e.target.src='https://t3.ftcdn.net/jpg/05/03/24/40/360_F_503244059_fRjgerSXBfOYZqTpei4oqyEpQrhbpOML.jpg'} alt={data.name} />
+                    <img src={`upload/${data.image}`} onError={(e)=> e.target.src='https://t3.ftcdn.net/jpg/05/03/24/40/360_F_503244059_fRjgerSXBfOYZqTpei4oqyEpQrhbpOML.jpg'} alt={data.name} />
                     <div className="product-name">
                         {data.name}
                     </div>

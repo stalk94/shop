@@ -1,4 +1,3 @@
-const CryptoJS = require('crypto-js');
 const { db } = require("./engine");
 const sessionList = require("./sessionList");
 

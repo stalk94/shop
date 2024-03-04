@@ -94,6 +94,6 @@ app.post('/upload', (req, res)=> {
 });
 
 
-
+//db.set('sessionsShopingCart', {})
 app.use('/', express.static(path.join(__dirname, '/dist')));
 server.listen(3000, ()=> console.log("start 3000"));

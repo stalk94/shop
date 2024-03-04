@@ -7,6 +7,12 @@ export type Tovar = {
     image: string
     price: number
     category: string
-    status: boolean
+    status: 'new'|'action'|'favorite'
     timeshtamp: string|number
+}
+
+export type ShowcaseProps = {
+    products: Array<Tovar>
+    template: (item: Tovar)=> React.ReactNode
+    header: string
 }
