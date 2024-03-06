@@ -20,11 +20,11 @@ export default function Header() {
     
     // слушатель переключения навигации
     useDidMount(()=> {
-        const doc = document.querySelector('.p-menubar').querySelector('.p-menubar-root-list');
-        doc.addEventListener('click', (ev)=> {
+        const navBar = document.querySelector('.p-menubar').querySelector('.p-menubar-root-list');
+        navBar.addEventListener('click', (ev)=> {
             if(ev.target.textContent!=='Главная') {
-                flags.view.set('category');
                 flags.category.set(ev.target.textContent);
+                flags.view.set('category');
             }
             else flags.view.set('base')
         });

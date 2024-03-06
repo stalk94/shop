@@ -4,7 +4,8 @@ export type Tovar = {
     count: number
     name: string
     description: string
-    image: string
+    text: string
+    image: Array<string>
     price: number
     category: string
     status: 'new'|'action'|'favorite'
@@ -15,4 +16,8 @@ export type ShowcaseProps = {
     products: Array<Tovar>
     template: (item: Tovar)=> React.ReactNode
     header: string
+}
+
+export type LeftContainerProps = {
+    useView: (value: 'base'|'category'|'products'|'action')=> void
 }

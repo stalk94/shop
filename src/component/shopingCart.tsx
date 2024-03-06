@@ -49,7 +49,7 @@ export default function BaseContainer() {
                 <Column body={(data)=> 
                     <img alt="img"
                         height="40"
-                        src={data.image}
+                        src={data.image[0]}
                         onError={(e)=> e.target.src = 'https://t3.ftcdn.net/jpg/05/03/24/40/360_F_503244059_fRjgerSXBfOYZqTpei4oqyEpQrhbpOML.jpg'}
                     />
                 }/>

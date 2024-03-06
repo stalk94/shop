@@ -14,10 +14,13 @@ import Header from "./component/header";
 import Promo from "./component/footer";
 import BodyFavorite from "./component/body";
 import Auth from "./component/auth";
+import Admin from "./component/admin";
+
 
 const components = {
     base: <BodyFavorite />,
-    category: <TovarList />
+    category: <TovarList />,
+    admin: <Admin />
 }
 
 
@@ -35,12 +38,12 @@ function App() {
     }
     useDidMount(()=> {
         EVENT.on('info', (detail)=> showToast(detail.type, detail.title, detail.text));
-        send('getShop', {}).then((res)=> {
-            globalState.settings.set(res.settings);
-            globalState.products.set(res.products);
-            globalState.shopingCart.set(res.shopingCart);
-        });
-        send('verifu', {}).then(user.set);
+        //send('getShop', {}).then((res)=> {
+            //globalState.settings.set(res.settings);
+            //globalState.products.set(res.products);
+            //globalState.shopingCart.set(res.shopingCart);
+        //});
+        //send('verifu', {}).then(user.set);
     });
 
 

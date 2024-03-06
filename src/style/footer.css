@@ -1,3 +1,13 @@
 .PromoContainer {
     
 }
+
+li.info {
+    cursor: pointer;
+    margin-top: 1%;
+    border-bottom: 1px rgba(128, 128, 128, 0.299) dashed;
+    
+}
+li.info:hover {
+    color: rgba(128, 128, 128, 0.701);
+}

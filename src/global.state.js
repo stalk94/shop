@@ -27,37 +27,37 @@ export default hookstate({
         code: "f230fh0g3",
         name: "Bamboo Watch",
         description: "Product Description",
-        image: "bamboo-watch.jpg",
+        image: ["bamboo-watch.jpg"],
         price: 65,
         category: "Прочее",
         status: 'new'
     },{
-        id: 1000,
+        id: 1001,
         count: 1,
         code: "f230fh0g3",
         name: "Bamboo Watch",
         description: "Product Description",
-        image: "bamboo-watch.jpg",
+        image: ["bamboo-watch.jpg"],
         price: 65,
         category: "Прочее",
         status: 'new'
     },{
-        id: 1000,
+        id: 1002,
         count: 1,
         code: "f230fh0g3",
         name: "Bamboo Watch",
         description: "Product Description",
-        image: "bamboo-watch.jpg",
+        image: ["bamboo-watch.jpg"],
         price: 65,
         category: "Прочее",
         status: 'new'
     },{
-        id: 1000,
+        id: 1003,
         count: 1,
         code: "f230fh0g3",
         name: "Bamboo Watch",
         description: "Product Description",
-        image: "bamboo-watch.jpg",
+        image: ["bamboo-watch.jpg"],
         price: 65,
         category: "Прочее",
         status: 'new'
@@ -68,7 +68,7 @@ export default hookstate({
         code: "f230fh0g3",
         name: "Bamboo Watch",
         description: "Product Description",
-        image: "bamboo-watch.jpg",
+        image: ["bamboo-watch.jpg"],
         price: 65,
         category: "Прочее",
         status: true
@@ -83,7 +83,7 @@ export const user = hookstate({
 });
 
 export const flags = hookstate({
-    view: 'base',
+    view: 'admin',
     category: undefined,
     viewAuth: false,
     viewAuthType: 'auth',
