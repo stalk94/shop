@@ -9,7 +9,9 @@ import { useInfoToolbar } from "../function";
 const localisation = {ru: '₽',ua: '₴',br: 'Br'}
 
 
-
+/**
+ * Корзина
+ */
 export default function BaseContainer() {
     const shopingCart = useHookstate(globalState.shopingCart);
 

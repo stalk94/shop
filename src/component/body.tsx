@@ -1,8 +1,7 @@
 import React from 'react';
 import "../style/body.css";
-import { ShowcaseProps } from './type';
+import { ShowcaseProps, Tovar } from './type';
 import globalState from "../global.state";
-import { useHookstate } from '@hookstate/core';
 import { Button } from 'primereact/button';
 import { Carousel } from 'primereact/carousel';
 
@@ -23,17 +22,18 @@ const Showcase =({products, template, header}: ShowcaseProps)=> {
 }
 
 /**
- * новинки
- * помеченные рекомендуемыми
- * акционные
- * популярные
+ * Карусели товаров:
+ * -новинки
+ * -помеченные рекомендуемыми
+ * -акционные
+ * -популярные
  */
 export default function Body() {
     const getNew =()=> {
         const result = globalState.products.get();
         return result.filter((elem)=> elem.status==='new');
     }
-    const productTemplate =(product)=> {
+    const productTemplate =(product: Tovar)=> {
         return(
             <div className="product-item">
                 <div className="mb-3">

@@ -1,13 +1,14 @@
 import React from 'react';
 import globalState from "../../global.state";
 import axios from 'axios';
+import { ImageContainerProps, Tovar } from "../type";
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import { Dropdown } from 'primereact/dropdown';
 import { useInfoToolbar } from "../../function";
 
-
-const ImageContainer =({images, image, useImage, useImages})=> {
+// редактор и загрузчик картинок товаров 
+const ImageContainer =({images, image, useImage, useImages}: ImageContainerProps)=> {
     const addImage =()=> {
         const element = document.createElement("input");
         element.type = "file";
@@ -53,16 +54,16 @@ const ImageContainer =({images, image, useImage, useImages})=> {
 }
 
 
-export function ReadProduct({product}) {
+export function ReadProduct({product}: {product: Tovar}) {
     const [name, setName] = React.useState(product.name);
+    const [text, setText] = React.useState(product.text);
     const [image, setImage] = React.useState(product.image);
-    const [images, setImages] = React.useState(product.images);
     const [count, setCount] = React.useState(product.count);
     const [price, setPrice] = React.useState(product.price);
     const [status, setStatus] = React.useState(product.status);
-    const [description, setDescription] = React.useState(product.description);
-    const [text, setText] = React.useState(product.text);
+    const [images, setImages] = React.useState(product.images);
     const [category, setCategory] = React.useState(product.category);
+    const [description, setDescription] = React.useState(product.description);
 
     const useFetch =()=> {
         const data = {
@@ -109,12 +110,14 @@ export function ReadProduct({product}) {
                 <span>Стоимость</span>
                 <InputText type='number' value={price} onChange={(e)=> setState(e, 'price')}/>
                 <span>Категория</span>
-                <Dropdown value={category} 
+                <Dropdown 
+                    value={category} 
                     options={getCategory()} 
                     onChange={(e)=> setState(e, 'category')} 
                 />
                 <span>Статус</span>
-                <Dropdown value={status} 
+                <Dropdown 
+                    value={status} 
                     options={['new', 'action', 'favorite']} 
                     onChange={(e)=> setState(e, 'status')} 
                 />
@@ -138,7 +141,7 @@ export function ReadProduct({product}) {
 export function AddProduct() {
     const [name, setName] = React.useState<string>('');
     const [image, setImage] = React.useState<string>();
-    const [images, setImages] = React.useState([]);
+    const [images, setImages] = React.useState<Array<string>>([]);
     const [description, setDescription] = React.useState<string>('');
     const [text, setText] = React.useState<string>('');
     const [count, setCount] = React.useState<number>(0);
@@ -190,12 +193,14 @@ export function AddProduct() {
                 <span>Стоимость</span>
                 <InputText type='number' value={price} onChange={(e)=> setState(e, 'price')}/>
                 <span>Категория</span>
-                <Dropdown value={category} 
+                <Dropdown 
+                    value={category} 
                     options={getCategory()} 
                     onChange={(e)=> setState(e, 'category')} 
                 />
                 <span>Статус</span>
-                <Dropdown value={status} 
+                <Dropdown 
+                    value={status} 
                     options={['new', 'action', 'favorite']} 
                     onChange={(e)=> setState(e, 'status')} 
                 />

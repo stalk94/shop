@@ -11,7 +11,12 @@ import { iconsList } from "./admin/category";
 import { useDidMount } from 'rooks';
 
 
-
+/**
+ * Верхняя панель.
+ * - Навигатор по категориям товаров
+ * - Корзина
+ * - Панель авторизации и управления
+ */
 export default function Header() {
     const state = useHookstate(user);
     const shopingCart = useHookstate(globalState.shopingCart);

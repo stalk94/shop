@@ -22,3 +22,10 @@ export type ShowcaseProps = {
 export type LeftContainerProps = {
     useView: (value: 'base'|'category'|'products'|'action')=> void
 }
+
+export type ImageContainerProps = {
+    images: Array<string>
+    image: string
+    useImage: (src: string)=> void
+    useImages: (images: Array<string>)=> void
+}

@@ -9,6 +9,33 @@ import { useInfoToolbar } from "../function";
 const localisation = {ru: '₽', ua: '₴', br: 'Br'}
 
 
+const Filters =({products, useProducts})=> {
+    const category = useHookstate(flags.category);
+
+    const useFilterPrice =(min: number, max: number)=> {
+        useProducts((products)=> {
+            const filter = products.filter((elem)=> elem.price > min && elem.price < max);
+            return filter.sort((a, b)=> a.price - b.price);
+        });
+    }
+    const useFilterNotEmpty =()=> {
+        useProducts((products)=> {
+            const filter = products.filter((elem)=> elem.count > 0);
+            return filter;
+        });
+    }
+    const useFilterRemove =()=> {
+        const all = globalState.products.get();
+        useProducts(all.filter(elem=> elem.category===category.get()));
+    }
+
+    return(
+        <>
+            
+        </>
+    );
+}
+
 
 export default function ListTovar() {
     const category = useHookstate(flags.category);
@@ -111,12 +138,15 @@ export default function ListTovar() {
 
 
     return(
-        <DataView 
-            itemTemplate={(product, layout)=> layout==='grid' ? renderGrid(product) : renderList(product)}
-            value={products} 
-            layout={globalState.settings.tovarLayout.get()}
-            paginator 
-            rows={9}
-        />
+        <div style={{display:'flex', flexDirection:'row'}}>
+            <Filters products={products} useProducts={setProducts} />
+            <DataView 
+                itemTemplate={(product, layout)=> layout==='grid' ? renderGrid(product) : renderList(product)}
+                value={products} 
+                layout={globalState.settings.tovarLayout.get()}
+                paginator 
+                rows={9}
+            />
+        </div>
     );
 } 
