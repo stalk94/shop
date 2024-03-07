@@ -7,31 +7,56 @@ import { Dropdown } from 'primereact/dropdown';
 import { useInfoToolbar } from "../../function";
 
 
-const ImageContainer =({images, product})=> {
-    const [state, setState] = React.useState(images);
-
-    const useFetch =()=> {
-        axios.post('addImageProduct', state)
+const ImageContainer =({images, image, useImage, useImages})=> {
+    const addImage =()=> {
+        const element = document.createElement("input");
+        element.type = "file";
+        element.accept = ".png,.jpg";
+        element.onchange =()=> {
+            const file = element.files[0];
+            const formData = new FormData();
+            
+            formData.append("image", file, file.name.split('.')[1]);
+            axios.post(gurl+'upload', formData).then((res)=> {
+                if(res.data.error) useInfoToolbar("error", 'Ошибка', res.data.error);
+                else useImages([...images, res.data]);
+            });
+        }
+        element.click();
     }
 
     return(
-        <>
-            <div className='imageContainer'>
-                {state.map((src, index)=>
-                    <img key={index}
-                        src={`upload/${src}`} 
-                        height='60px'
-                        onError={(e)=> e.target.src='https://t3.ftcdn.net/jpg/05/03/24/40/360_F_503244059_fRjgerSXBfOYZqTpei4oqyEpQrhbpOML.jpg'}  
-                    />
-                )}           
-            </div>
-        </>
+        <div className='imageContainer'>
+            <img style={{border:'2px solid red'}}
+                src={`../../upload/${image}`} 
+                height='80px'
+                width='80px'
+                onError={(e)=> e.target.src='https://t3.ftcdn.net/jpg/05/03/24/40/360_F_503244059_fRjgerSXBfOYZqTpei4oqyEpQrhbpOML.jpg'}  
+            />
+            {images.map((src, index)=> src!==image && 
+                <img className='listImages'
+                    onClick={()=> useImage(src)}
+                    key={index}
+                    src={`../../upload/${src}`} 
+                    width='60px'
+                    height='60px'
+                    onError={(e)=> e.target.src='https://t3.ftcdn.net/jpg/05/03/24/40/360_F_503244059_fRjgerSXBfOYZqTpei4oqyEpQrhbpOML.jpg'}  
+                />
+            )}  
+            <div className='addImageContainer' onClick={addImage}>
+                <div className='addImage'>
+                    +
+                </div> 
+            </div>        
+        </div>
     );
 }
 
 
 export function ReadProduct({product}) {
     const [name, setName] = React.useState(product.name);
+    const [image, setImage] = React.useState(product.image);
+    const [images, setImages] = React.useState(product.images);
     const [count, setCount] = React.useState(product.count);
     const [price, setPrice] = React.useState(product.price);
     const [status, setStatus] = React.useState(product.status);
@@ -43,7 +68,8 @@ export function ReadProduct({product}) {
         const data = {
             id: product.id,
             name: name,
-            image: [],
+            image: image,
+            images: images,
             count: count,
             price: price,
             status: status,
@@ -77,6 +103,7 @@ export function ReadProduct({product}) {
     return(
         <div style={{display:'flex', flexDirection:'column'}}>
             <>
+                <ImageContainer images={images} image={image} useImage={setImage} useImages={setImages} />
                 <span>Наименование</span>
                 <InputText value={name} onChange={(e)=> setState(e, 'name')}/>
                 <span>Стоимость</span>
@@ -109,18 +136,21 @@ export function ReadProduct({product}) {
     );
 }
 export function AddProduct() {
-    const [name, setName] = React.useState('');
-    const [description, setDescription] = React.useState('');
-    const [text, setText] = React.useState('');
-    const [count, setCount] = React.useState(0);
-    const [price, setPrice] = React.useState(0);
-    const [status, setStatus] = React.useState();
-    const [category, setCategory] = React.useState();
+    const [name, setName] = React.useState<string>('');
+    const [image, setImage] = React.useState<string>();
+    const [images, setImages] = React.useState([]);
+    const [description, setDescription] = React.useState<string>('');
+    const [text, setText] = React.useState<string>('');
+    const [count, setCount] = React.useState<number>(0);
+    const [price, setPrice] = React.useState<number>(0);
+    const [status, setStatus] = React.useState<'new'|'action'|'favorite'>('new');
+    const [category, setCategory] = React.useState<string>();
 
     const useFetch =()=> {
         const data = {
             name: name,
-            image: [],
+            image: image,
+            images: images,
             count: count,
             price: price,
             status: status,
@@ -154,6 +184,7 @@ export function AddProduct() {
     return(
         <div style={{display:'flex', flexDirection:'column'}}>
             <>
+                <ImageContainer images={images} image={image} useImage={setImage} useImages={setImages} />
                 <span>Наименование</span>
                 <InputText value={name} onChange={(e)=> setState(e, 'name')}/>
                 <span>Стоимость</span>

@@ -8,10 +8,27 @@ import { Column } from 'primereact/column';
 import { useInfoToolbar } from "../../function";
 import globalState from "../../global.state";
 import { useHookstate } from '@hookstate/core';
+import { GiKnifeFork, GiClothes, GiTrousers } from "react-icons/gi";
+import { GoGear } from "react-icons/go";
+import { PiBootBold } from "react-icons/pi";
+import { FaCar, FaTshirt, FaWrench, FaBars } from "react-icons/fa";
 
-/**
- * Привязка пользовательских параметров товара к категории
- */
+// Иконки категорий
+export const iconsList = {
+    standart: <FaBars />,
+    eat: <GiKnifeFork />,
+    gear: <GoGear />,
+    car: <FaCar />,
+    clothes: <GiClothes />,
+    trousers: <GiTrousers />,
+    shirt: <FaTshirt />,
+    wrench: <FaWrench />,
+    boot: <PiBootBold />,
+};
+
+
+
+//Привязка пользовательских параметров товара к категории
 const CustomParam =()=> {
     return(
         <>
@@ -22,14 +39,13 @@ const CustomParam =()=> {
 
 export default function Category() {
     const [name, setName] = React.useState<string>('');
-    const [icon, setIcon] = React.useState<string>();
+    const [icon, setIcon] = React.useState<string>('standart');
     const [curent, setCurent] = React.useState(globalState.settings.category.get());
     const category = useHookstate(globalState.settings.category);
     const addCategoryRef = React.useRef(null);
-    const iconsList = ['pi pi-apple', 'pi pi-box', 'pi pi-car', 'pi pi-database', 'pi pi-cog', 'pi pi-wrench', 'pi pi-phone', 'pi pi-align-justify'];
 
     const addCategory =()=> {
-        send('addCategory', {category: {name: name, icon: icon}}).then((res)=> {
+        send('addCategory', {category: {label: name, icon: icon}}).then((res)=> {
             if(res.error) useInfoToolbar("error", 'Ошибка', res.error);
             else category.set(res);
         });
@@ -44,17 +60,17 @@ export default function Category() {
             <OverlayPanel ref={addCategoryRef}>
                 <div style={{display:'flex', flexDirection:'column'}}>
                     <span>Наименование</span>
-                    <InputText value={name} onChange={(e)=> setName(e.value)}/>
+                    <InputText placeholder='min 3 simbol' value={name} onChange={(e)=> setName(e.value)}/>
                     <span>Иконка</span>
                     <Dropdown 
                         itemTemplate={(data)=> 
                             <>
-                                <i className={data}/>
+                                { iconsList[data] }
                                 { "  "+data }
                             </>
                         }
                         value={icon} 
-                        options={iconsList} 
+                        options={Object.keys(iconsList)} 
                         onChange={(e)=> setIcon(e.value)} 
                     />
                      <Button style={{marginTop:'15px'}} 
@@ -70,24 +86,18 @@ export default function Category() {
                 header={<Button className="p-button-success" icon="pi pi-plus" onClick={(e)=> addCategoryRef.current.toggle(e)}/>} 
                 responsiveLayout="scroll"
             >
-                <Column header="Иконка"
-                    body={(data)=> 
-                        <i className={data.icon}/>
-                    }
-                />
+                <Column header="Иконка" body={(data)=> iconsList[data.icon]}/>
                 <Column field="label" header="Наименование"/>
-                <Column
-                    body={(data)=> 
-                        <Button style={{marginLeft:'5px'}} 
-                            className="p-button-outlined p-button-danger" 
-                            icon="pi pi-trash" 
-                            onClick={()=> send('delCategory', {category:data}).then((res)=> {
-                                if(res.error) useInfoToolbar("error", 'Ошибка', res.error);
-                                else category.set(res);
-                            })}
-                        />
-                    }
-                />
+                <Column body={(data)=> 
+                    <Button style={{marginLeft:'5px'}} 
+                        className="p-button-outlined p-button-danger" 
+                        icon="pi pi-trash" 
+                        onClick={()=> send('delCategory', {category:data}).then((res)=> {
+                            if(res.error) useInfoToolbar("error", 'Ошибка', res.error);
+                            else category.set(res);
+                        })}
+                    />
+                }/>
             </DataTable>
         </>
     );

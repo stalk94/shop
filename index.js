@@ -7,7 +7,7 @@ const sqlite = require("better-sqlite3");
 const session = require('express-session');
 const fileUpload = require('express-fileupload');
 const SqliteStore = require("better-sqlite3-session-store")(session);
-const { authVerifuSid, authVerifu, regUser } = require("./server/function");
+const { authVerifuSid, authVerifu, regUser, products } = require("./server/function");
 const sessionList = require("./server/sessionList");
 const { db } = require("./server/engine");
 
@@ -88,10 +88,74 @@ app.post("/addShopingCart", async(req, res)=> {
 app.post("/getShopingCart", async(req, res)=> {
     res.send(await sessionList.getShopingCart(req.session.id));
 });
-app.post('/upload', (req, res)=> {
-    const { image } = req.files;
-    image.mv(__dirname + '/src/upload/' + image.name);
+app.post('/upload', async(req, res)=> {
+    const id = await db.add('IMAGESGUID', 1);
+    req.files.image.mv(__dirname + '/src/upload/product_' + id + '.' + req.files.image.name);
+    res.send('product_' + id + '.' + req.files.image.name);
 });
+app.post("/addCategory", async(req, res)=> {
+    const user = await authVerifuSid(req.session.id);
+
+    if(user && user.permision < 2) {
+        if(req.body.category && req.body.category.label.length > 3){
+            await db.push('settings.category', req.body.category);
+            res.send(await db.get('settings.category'));
+        }
+        else res.send({error: 'not data'});
+    }
+    else res.send({error: 'not permision'});
+});
+app.post("/delCategory", async(req, res)=> {
+    const user = await authVerifuSid(req.session.id);
+
+    if(user && user.permision < 2) {
+        if(req.body.category && req.body.category.label){
+            const category = await db.get('settings.category');
+            const filter = category.filter((elem)=> elem.label!==req.body.category.label);
+            await db.set('settings.category', filter);
+            res.send(await db.get('settings.category'));
+        }
+        else res.send({error: 'not data'});
+    }
+    else res.send({error: 'not permision'});
+});
+app.post("/addProduct", async(req, res)=> {
+    const user = await authVerifuSid(req.session.id);
+
+    if(user && user.permision < 2) {
+        if(req.body.product){
+            const result = await products.add(req.body.product);
+            return res.send(result);
+        }
+        else res.send({error: 'not data'});
+    }
+    else res.send({error: 'not permision'});
+});
+app.post("/readProduct", async(req, res)=> {
+    const user = await authVerifuSid(req.session.id);
+
+    if(user && user.permision < 2) {
+        if(req.body.product){
+            const result = await products.read(req.body.product);
+            return res.send(result);
+        }
+        else res.send({error: 'not data'});
+    }
+    else res.send({error: 'not permision'});
+});
+app.post("/deleteProduct", async(req, res)=> {
+    const user = await authVerifuSid(req.session.id);
+
+    if(user && user.permision < 2) {
+        if(req.body.product){
+            const result = await products.delete(req.body.product);
+            return res.send(result);
+        }
+        else res.send({error: 'not data'});
+    }
+    else res.send({error: 'not permision'});
+});
+
 
 
 //db.set('sessionsShopingCart', {})

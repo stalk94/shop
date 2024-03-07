@@ -7,6 +7,7 @@ import { Menubar } from 'primereact/menubar';
 import { Menu } from 'primereact/menu';
 import { Badge } from 'primereact/badge';
 import ShopingCart from "./shopingCart";
+import { iconsList } from "./admin/category";
 import { useDidMount } from 'rooks';
 
 
@@ -23,12 +24,28 @@ export default function Header() {
         const navBar = document.querySelector('.p-menubar').querySelector('.p-menubar-root-list');
         navBar.addEventListener('click', (ev)=> {
             if(ev.target.textContent!=='Главная') {
-                flags.category.set(ev.target.textContent);
+                flags.category.set(ev.target.textContent.replace(' ', ''));
                 flags.view.set('category');
             }
             else flags.view.set('base')
         });
     });
+    const getModel =()=> {
+        const result = [];
+        const category = globalState.settings.category.get();
+        category.forEach((elem)=> {
+            if(elem.label!=='Главная') result.push({label: 
+                <>
+                    { iconsList[elem.icon] }
+                    { ' '+ elem.label }
+                </>
+            });
+            else result.push(elem);
+        });
+
+
+        return result;
+    }
     React.useEffect(()=> {
         if(state.login.get()) {
             const model = [{
@@ -70,7 +87,7 @@ export default function Header() {
     return(
         <React.Fragment>
             <Menubar
-                model={globalState.settings.category.get()}
+                model={getModel()}
                 start={
                     <img alt="logo" 
                         src={globalState.logo.get()?globalState.logo.get():'https://www.primefaces.org/primereact/images/logo.png'} 

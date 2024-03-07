@@ -5,7 +5,8 @@ export type Tovar = {
     name: string
     description: string
     text: string
-    image: Array<string>
+    image: string
+    images: Array<string>
     price: number
     category: string
     status: 'new'|'action'|'favorite'

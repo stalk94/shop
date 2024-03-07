@@ -5,3 +5,32 @@
     background-color: gray;
     width: 30%;
 }
+.imageContainer {
+    display: flex;
+    flex-direction: row;
+}
+.addImage {
+    width: 30px;
+    margin-top: 20%;
+    margin-left: 35%;
+    font-size: 30px;
+}
+
+.addImageContainer {
+    width: 80px;
+    height: 80px;
+    border: 1px solid grey;
+    cursor: pointer
+}
+
+.addImageContainer:hover {
+    color: orange;
+}
+
+.listImages {
+    cursor: pointer
+}
+
+.listImages:hover {
+    border: 1px solid green;
+}

@@ -7,6 +7,7 @@ import { Dialog } from 'primereact/dialog';
 import { ReadProduct, AddProduct } from './modal';
 import globalState from "../../global.state";
 import { useHookstate } from '@hookstate/core';
+import { useInfoToolbar } from "../../function";
 
 
 
@@ -19,6 +20,12 @@ export default function Products() {
     const useReadProduct =(product: Tovar)=> {
         setCurent(product);
         setViewModal(true);
+    }
+    const useDelete =(product: Tovar)=> {
+        send('deleteProduct', {product: product}).then((res)=> {
+            if(res.error) useInfoToolbar("error", 'Ошибка', res.error);
+            else products.set(res);
+        });
     }
 
 
@@ -60,7 +67,7 @@ export default function Products() {
                 <Column body={(data)=> 
                     <>
                         <Button className="p-button-outlined" icon="pi pi-pencil" onClick={(e)=> useReadProduct(data)}/>
-                        <Button style={{marginLeft:'5px'}} className="p-button-outlined p-button-danger" icon="pi pi-trash" onClick={()=> setViewAddModal(true)}/>
+                        <Button style={{marginLeft:'5px'}} className="p-button-outlined p-button-danger" icon="pi pi-trash" onClick={()=> useDelete(data)}/>
                     </>
                 }/>
             </DataTable>

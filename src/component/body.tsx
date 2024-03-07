@@ -39,7 +39,7 @@ export default function Body() {
                 <div className="mb-3">
                     <img className="product-image"
                         height='150px'
-                        src={`upload/${product.image}`} 
+                        src={`../upload/${product.image}`} 
                         onError={(e)=> e.target.src='https://t3.ftcdn.net/jpg/05/03/24/40/360_F_503244059_fRjgerSXBfOYZqTpei4oqyEpQrhbpOML.jpg'} 
                         alt={product.name}  
                     />

@@ -23,7 +23,7 @@ const LeftConytainer =({useView}: LeftContainerProps)=> {
 
 
 export default function BaseContainer() {
-    const [view, setView] = React.useState<'base'|'category'|'products'|'action'>('category');
+    const [view, setView] = React.useState<'base'|'category'|'products'|'action'>('products');
     const CategoryList = {
         base: <Base/>,
         category: <Category/>,

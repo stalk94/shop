@@ -9,16 +9,15 @@ export default hookstate({
         cooper: 'newCompany',
         category: [{
             label: 'Главная',
-           
         },{
             label: 'Авто',
-            icon: 'pi pi-fw pi-car'
+            icon: 'car'
         },{
             label: 'Детали',
-            icon: 'pi pi-fw pi-wrench'
+            icon: 'eat'
         },{
             label: 'Прочее',
-            icon: 'pi pi-fw pi-box'
+            icon: 'gear'
         }]
     },
     products: [{
@@ -27,7 +26,8 @@ export default hookstate({
         code: "f230fh0g3",
         name: "Bamboo Watch",
         description: "Product Description",
-        image: ["bamboo-watch.jpg"],
+        image: '',
+        images: ["bamboo-watch.jpg"],
         price: 65,
         category: "Прочее",
         status: 'new'
@@ -37,7 +37,8 @@ export default hookstate({
         code: "f230fh0g3",
         name: "Bamboo Watch",
         description: "Product Description",
-        image: ["bamboo-watch.jpg"],
+        image: '',
+        images: ["bamboo-watch.jpg"],
         price: 65,
         category: "Прочее",
         status: 'new'
@@ -47,17 +48,19 @@ export default hookstate({
         code: "f230fh0g3",
         name: "Bamboo Watch",
         description: "Product Description",
-        image: ["bamboo-watch.jpg"],
+        images: ["bamboo-watch.jpg"],
+        image: '',
         price: 65,
         category: "Прочее",
         status: 'new'
     },{
         id: 1003,
         count: 1,
+        image: '',
         code: "f230fh0g3",
         name: "Bamboo Watch",
         description: "Product Description",
-        image: ["bamboo-watch.jpg"],
+        images: ["bamboo-watch.jpg"],
         price: 65,
         category: "Прочее",
         status: 'new'

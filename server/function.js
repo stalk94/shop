@@ -55,3 +55,30 @@ exports.regUser =async(login, pass)=> {
         }
     }
 }
+exports.products = {
+    async add(data) {
+        const productsId = await db.add('GUID', 1);
+        data.id = productsId;
+        data.timeshtamp = new Date().getTime();
+        await db.push('products', data);
+        return await db.get('products');
+    },
+    async read(data) {
+        const result = [];
+        const products = await db.get('products');
+        products.forEach((element)=> {
+            if(element.id===data.id) result.push(data);
+            else result.push(element);
+        });
+        await db.set('products', result);
+
+        return result;
+    },
+    async delete(data) {
+        const products = await db.get('products');
+        const filter = products.filter((elem)=> elem.id!==data.id);
+        await db.set('products', filter);
+
+        return products;
+    }
+}

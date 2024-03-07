@@ -27,7 +27,7 @@ export default function ListTovar() {
         return (
             <div className="col-12">
                 <div className="product-list-item">
-                    <img src={`images/product/${data.image[0]}`} onError={(e)=> e.target.src='https://t3.ftcdn.net/jpg/05/03/24/40/360_F_503244059_fRjgerSXBfOYZqTpei4oqyEpQrhbpOML.jpg'} alt={data.name} />
+                    <img src={`../upload/${data.image}`} onError={(e)=> e.target.src='https://t3.ftcdn.net/jpg/05/03/24/40/360_F_503244059_fRjgerSXBfOYZqTpei4oqyEpQrhbpOML.jpg'} alt={data.name} />
                     <div className="product-list-detail">
                         <div className="product-name">{data.name}</div>
                         <div className="product-description">{data.description}</div>
@@ -74,7 +74,7 @@ export default function ListTovar() {
                     </span>
                 </div>
                 <div className="product-grid-item-content">
-                    <img src={`upload/${data.image[0]}`} onError={(e)=> e.target.src='https://t3.ftcdn.net/jpg/05/03/24/40/360_F_503244059_fRjgerSXBfOYZqTpei4oqyEpQrhbpOML.jpg'} alt={data.name} />
+                    <img src={`../upload/${data.image}`} onError={(e)=> e.target.src='https://t3.ftcdn.net/jpg/05/03/24/40/360_F_503244059_fRjgerSXBfOYZqTpei4oqyEpQrhbpOML.jpg'} alt={data.name} />
                     <div className="product-name">
                         {data.name}
                     </div>
