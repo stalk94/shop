@@ -8,6 +8,8 @@
 .imageContainer {
     display: flex;
     flex-direction: row;
+    margin-bottom: 15px;
+    background-color: rgba(169, 169, 169, 0.05);
 }
 .addImage {
     width: 30px;
@@ -17,6 +19,7 @@
 }
 
 .addImageContainer {
+    margin-left: 5px;
     width: 80px;
     height: 80px;
     border: 1px solid grey;

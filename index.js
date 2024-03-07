@@ -89,9 +89,13 @@ app.post("/getShopingCart", async(req, res)=> {
     res.send(await sessionList.getShopingCart(req.session.id));
 });
 app.post('/upload', async(req, res)=> {
-    const id = await db.add('IMAGESGUID', 1);
-    req.files.image.mv(__dirname + '/src/upload/product_' + id + '.' + req.files.image.name);
-    res.send('product_' + id + '.' + req.files.image.name);
+    const user = await authVerifuSid(req.session.id);
+    
+    if(user && user.permision < 2) {
+        const id = await db.add('IMAGESGUID', 1);
+        req.files.image.mv(__dirname + '/src/upload/product_' + id + '.' + req.files.image.name);
+        res.send('product_' + id + '.' + req.files.image.name);
+    }
 });
 app.post("/addCategory", async(req, res)=> {
     const user = await authVerifuSid(req.session.id);

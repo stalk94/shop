@@ -4,6 +4,7 @@ import { hookstate } from '@hookstate/core';
 export default hookstate({
     logo: undefined,
     settings: {
+        crm: undefined,
         localisation: 'ua',
         tovarLayout: 'grid',
         cooper: 'newCompany',
@@ -22,7 +23,7 @@ export default hookstate({
     },
     products: [{
         id: 1000,
-        count: 1,
+        count: 15,
         code: "f230fh0g3",
         name: "Bamboo Watch",
         description: "Product Description",
@@ -33,7 +34,7 @@ export default hookstate({
         status: 'new'
     },{
         id: 1001,
-        count: 1,
+        count: 0,
         code: "f230fh0g3",
         name: "Bamboo Watch",
         description: "Product Description",

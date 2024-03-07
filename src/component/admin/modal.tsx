@@ -25,24 +25,37 @@ const ImageContainer =({images, image, useImage, useImages}: ImageContainerProps
         }
         element.click();
     }
+    const toogleImage =(src: string)=> {
+        useImage(src);
+    }
+    const removeImage =(src: string)=> {
+        useImages((old)=> old.filter((imgSrc: string)=> imgSrc!==src));
+    }
 
     return(
         <div className='imageContainer'>
             <img style={{border:'2px solid red'}}
                 src={`../../upload/${image}`} 
-                height='80px'
-                width='80px'
+                height='100px'
+                width='100px'
                 onError={(e)=> e.target.src='https://t3.ftcdn.net/jpg/05/03/24/40/360_F_503244059_fRjgerSXBfOYZqTpei4oqyEpQrhbpOML.jpg'}  
             />
             {images.map((src, index)=> src!==image && 
-                <img className='listImages'
-                    onClick={()=> useImage(src)}
-                    key={index}
-                    src={`../../upload/${src}`} 
-                    width='60px'
-                    height='60px'
-                    onError={(e)=> e.target.src='https://t3.ftcdn.net/jpg/05/03/24/40/360_F_503244059_fRjgerSXBfOYZqTpei4oqyEpQrhbpOML.jpg'}  
-                />
+                <div key={index} style={{display:'flex', flexDirection:'column'}}>
+                    <img className='listImages'
+                        onClick={()=> toogleImage(src)}
+                        src={`../../upload/${src}`} 
+                        width='60px'
+                        height='60px'
+                        onError={(e)=> e.target.src='https://t3.ftcdn.net/jpg/05/03/24/40/360_F_503244059_fRjgerSXBfOYZqTpei4oqyEpQrhbpOML.jpg'}  
+                    />
+                    <Button
+                        style={{marginTop:'2px', width:'60px'}} 
+                        className='p-button-outlined p-button-danger'
+                        icon='pi pi-trash'
+                        onClick={()=> removeImage(src)}
+                    />
+                </div>
             )}  
             <div className='addImageContainer' onClick={addImage}>
                 <div className='addImage'>

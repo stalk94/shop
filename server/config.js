@@ -12,6 +12,10 @@ db.set('logs', {
     warn: []
 });
 db.set('settings', {
+    crm: {
+        key: undefined, 
+        url: undefined
+    },
     localisation: 'ua',
     tovarLayout: 'grid',
     category: []

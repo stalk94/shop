@@ -1,5 +1,6 @@
 const { db } = require("./engine");
 const sessionList = require("./sessionList");
+const apiCrm = require('./api_crm');
 
 
 
@@ -31,7 +32,7 @@ exports.authVerifu =async(login, password, sid)=> {
         return {error: "В доступе отказано invalid login or password"};
     }
 }
-exports.regUser =async(login, pass)=> {
+exports.regUser =async(login, pass, telephone)=> {
     if(pass.length < 6 && pass.length > 35) return {error:"password minimum 6 simbol, max 35"};
     if(login.length < 5 && login.length > 22) return {error:"login minimum 5 simbol, max 22"};
     else {
@@ -48,9 +49,9 @@ exports.regUser =async(login, pass)=> {
                 online: false,
                 avatar: undefined,
                 permision: 2,
-                story: [],
                 cupons: []
             });
+            if(telephone) apiCrm.addContact(login, telephone);
             return {};
         }
     }

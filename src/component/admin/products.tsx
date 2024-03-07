@@ -27,6 +27,15 @@ export default function Products() {
             else products.set(res);
         });
     }
+    const countProduct =(product: Tovar)=> {
+        if(product.count < 1) return <div style={{color:'red'}}>
+            {product.count}
+        </div>
+        else if(product.count < 15) return <div style={{color:'orange'}}>
+            {product.count}
+        </div>
+        else return product.count;
+    }
 
 
     return(
@@ -51,8 +60,9 @@ export default function Products() {
                 paginator 
                 rows={20}
             >
-                <Column body={(data)=> 
-                        <img src={`upload/${data.image[0]}`} 
+                <Column 
+                    body={(data)=> 
+                        <img src={`../upload/${data.image}`}
                             height='60px'
                             onError={(e)=> e.target.src='https://t3.ftcdn.net/jpg/05/03/24/40/360_F_503244059_fRjgerSXBfOYZqTpei4oqyEpQrhbpOML.jpg'} 
                             alt={data.name} 
@@ -62,7 +72,7 @@ export default function Products() {
                 <Column field="name" header="Наименование"/>
                 <Column field="price" header="Стоимость" />
                 <Column field="category" header="Категория"/>
-                <Column field="count" header="Остаток" />
+                <Column header="Остаток" body={countProduct}/>
                 <Column field="status" header="Статус" />
                 <Column body={(data)=> 
                     <>
