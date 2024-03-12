@@ -1,6 +1,6 @@
 import React from 'react';
 import { Tovar } from "./type";
-import globalState from "../global.state";
+import globalState, { flags, user } from "../global.state";
 import { useHookstate } from '@hookstate/core';
 import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
@@ -15,8 +15,14 @@ const localisation = {ru: '₽',ua: '₴',br: 'Br'}
 export default function BaseContainer() {
     const shopingCart = useHookstate(globalState.shopingCart);
 
+    // переход к странице оплаты
     const onPay =()=> {
-
+        if(user.login.get()) flags.view.set('order');
+        else {
+            flags.viewAuthType.set('auth');
+            flags.viewAuth.set(true);
+            useInfoToolbar('warn', 'Не авторизирован', 'Необходимо сперва авторизироваться либо пройти регистрацию');
+        }
     }
     const onDelete =(element: Tovar|'all')=> {
         send('delShopingCart', {product:element}).then((res)=> {

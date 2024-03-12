@@ -29,3 +29,12 @@ export type ImageContainerProps = {
     useImage: (src: string)=> void
     useImages: (images: Array<string>)=> void
 }
+
+export type Order = {
+    id: number
+    timeshtamp: number
+    author: string
+    telephone: string
+    status: 'create' | 'panding' | 'complete' | 'travel' | 'cancel'
+    data: Array<Tovar>
+}

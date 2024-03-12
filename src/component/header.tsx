@@ -11,8 +11,9 @@ import { iconsList } from "./admin/category";
 import { useDidMount } from 'rooks';
 
 
+
 /**
- * Верхняя панель.
+ * Верхняя панель:
  * - Навигатор по категориям товаров
  * - Корзина
  * - Панель авторизации и управления
@@ -21,8 +22,8 @@ export default function Header() {
     const state = useHookstate(user);
     const shopingCart = useHookstate(globalState.shopingCart);
     const [mainUser, setMainUser] = React.useState<JSX.IntrinsicElements>();
-    const op = React.useRef(null);
-    const ops = React.useRef(null);
+    const op = React.useRef<OverlayPanel>(null);
+    const ops = React.useRef<OverlayPanel>(null);
     
     // слушатель переключения навигации
     useDidMount(()=> {
@@ -35,19 +36,19 @@ export default function Header() {
             else flags.view.set('base')
         });
     });
-    const getModel =()=> {
+    const getModel =(): Array<{label: React.JSX.Element}> => {
         const result = [];
         const category = globalState.settings.category.get();
         category.forEach((elem)=> {
-            if(elem.label!=='Главная') result.push({label: 
-                <>
-                    { iconsList[elem.icon] }
-                    { ' '+ elem.label }
-                </>
+            if(elem.label!=='Главная') result.push({
+                label: 
+                    <>
+                        { iconsList[elem.icon] }
+                        { ' '+ elem.label }
+                    </>
             });
             else result.push(elem);
         });
-
 
         return result;
     }
@@ -56,7 +57,7 @@ export default function Header() {
             const model = [{
                     label: 'Кабинет',
                     icon: 'pi pi-user',
-                    command:  ()=> flags.view.set('user')
+                    command: ()=> flags.view.set('user')
                 }
             ];
             if(state.permision.get() < 2) model.push({

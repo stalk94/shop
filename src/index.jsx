@@ -15,12 +15,14 @@ import Promo from "./component/footer";
 import BodyFavorite from "./component/body";
 import Auth from "./component/auth";
 import Admin from "./component/admin";
+import Order from "./component/order";
 
 
 const components = {
     base: <BodyFavorite />,
     category: <TovarList />,
-    admin: <Admin />
+    admin: <Admin />,
+    order: <Order />
 }
 
 

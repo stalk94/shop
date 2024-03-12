@@ -76,7 +76,8 @@ export default hookstate({
         price: 65,
         category: "Прочее",
         status: true
-    }]
+    }],
+    orders: []
 });
 
 export const user = hookstate({
@@ -87,7 +88,7 @@ export const user = hookstate({
 });
 
 export const flags = hookstate({
-    view: 'admin',
+    view: 'pays',
     category: undefined,
     viewAuth: false,
     viewAuthType: 'auth',

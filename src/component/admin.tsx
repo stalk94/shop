@@ -8,7 +8,6 @@ import Action from './admin/action';
 import Base from './admin/base';
 
 
-
 const LeftConytainer =({useView}: LeftContainerProps)=> {
     const items = [
         {label: 'Глобальные', icon: 'pi pi-fw pi-cog', command:()=> useView('base')},

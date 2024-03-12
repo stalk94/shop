@@ -1,6 +1,6 @@
 import React from 'react';
 import "../style/auth.css";
-import globalState, { flags, user } from "../global.state";
+import { flags, user } from "../global.state";
 import { useHookstate } from '@hookstate/core';
 import { InputText } from 'primereact/inputtext';
 import { Dialog } from 'primereact/dialog';
