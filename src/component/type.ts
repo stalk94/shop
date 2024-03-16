@@ -30,11 +30,27 @@ export type ImageContainerProps = {
     useImages: (images: Array<string>)=> void
 }
 
+export type TravelMethod = {
+    id: number
+    label: string
+    description: string
+}
+
+export type PayMethod = {
+    id: number
+    travelId: number
+    label: string
+    description: string
+}
+
 export type Order = {
     id: number
     timeshtamp: number
     author: string
     telephone: string
+    massage: string
     status: 'create' | 'panding' | 'complete' | 'travel' | 'cancel'
     data: Array<Tovar>
+    travel?: TravelMethod
+    pay?: PayMethod
 }

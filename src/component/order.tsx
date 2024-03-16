@@ -41,7 +41,7 @@ const CurentOrderComponent =()=> {
 
 
 export default function BaseContainer() {
-    const [view, setView] = React.useState<'base'|'template'>('base');
+    const [view, setView] = React.useState<'base'|'template'>('bas');
 
 
     return(

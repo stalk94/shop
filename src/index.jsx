@@ -9,7 +9,7 @@ import "primeicons/primeicons.css";
 import 'primeflex/primeflex.css';
 import { useDidMount } from 'rooks';
 import { Toast } from 'primereact/toast';
-import TovarList from "./component/listTovar";
+import TovarList from "./component/products";
 import Header from "./component/header";
 import Promo from "./component/footer";
 import BodyFavorite from "./component/body";

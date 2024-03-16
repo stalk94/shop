@@ -1,0 +1,30 @@
+.travels {
+    
+}
+
+.travel {
+    background: #494949;
+    color: #dedede;
+    border: 1px solid #191919;
+    border-width: 1px 1px 0 1px;
+    padding: 0.857rem 2rem;
+    font-weight: 100;
+}
+
+.description {
+    background: #191919;
+    color: #dedede;
+    border: 1px solid #191919;
+    border-width: 1px 1px 0 1px;
+    padding: 0.5rem 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 100;
+}
+
+.radioButtonWrapper {
+    padding: 0 0 10px;
+}
+
+.travelHeader {
+    padding: 0.5rem 0.5rem;
+}

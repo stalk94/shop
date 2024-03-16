@@ -8,6 +8,17 @@ export default hookstate({
         localisation: 'ua',
         tovarLayout: 'grid',
         cooper: 'newCompany',
+        travels: [{
+            id: 0,
+            label: 'Самовывоз',
+            description: 'Самовывоз с нашего склада в хащах'
+        }],
+        pays: [{
+            id: 0,
+            travelId: 0,
+            label: 'Наложенный платеж',
+            description: 'Оплата почкой при получении'
+        }],
         category: [{
             label: 'Главная',
         },{
@@ -77,7 +88,43 @@ export default hookstate({
         category: "Прочее",
         status: true
     }],
-    orders: []
+    orders: [{
+        id: 0,
+        timeshtamp: '14.03.2024 18:40',
+        author: 'test',
+        telephone: '0000',
+        status: 'create',
+        massage: 'тест 1',
+        data: [{
+            id: 1000,
+            count: 1,
+            code: "f230fh0g3",
+            name: "Bamboo Watch",
+            description: "Product Description",
+            image: ["bamboo-watch.jpg"],
+            price: 65,
+            category: "Прочее",
+            status: true
+        }]
+    },{
+        id: 1,
+        timeshtamp: '14.03.2024 18:39',
+        author: 'test',
+        telephone: '0000',
+        status: 'travel',
+        massage: 'тест',
+        data: [{
+            id: 1000,
+            count: 1,
+            code: "f230fh0g3",
+            name: "Bamboo Watch",
+            description: "Product Description",
+            image: ["bamboo-watch.jpg"],
+            price: 65,
+            category: "Прочее",
+            status: true
+        }]
+    }]
 });
 
 export const user = hookstate({
@@ -88,7 +135,7 @@ export const user = hookstate({
 });
 
 export const flags = hookstate({
-    view: 'pays',
+    view: 'order',
     category: undefined,
     viewAuth: false,
     viewAuthType: 'auth',
