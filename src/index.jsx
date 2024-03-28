@@ -16,13 +16,15 @@ import BodyFavorite from "./component/body";
 import Auth from "./component/auth";
 import Admin from "./component/admin";
 import Order from "./component/order";
+import Product from "./component/product";
 
 
 const components = {
     base: <BodyFavorite />,
     category: <TovarList />,
     admin: <Admin />,
-    order: <Order />
+    order: <Order />,
+    product: <Product />
 }
 
 

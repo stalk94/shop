@@ -135,9 +135,38 @@ export const user = hookstate({
 });
 
 export const flags = hookstate({
-    view: 'admin',
+    view: 'product',
     category: undefined,
     viewAuth: false,
     viewAuthType: 'auth',
-    bodyView: 'main'
+    bodyView: 'main',
+    productView: {
+        id: 1000,
+        count: 15,
+        code: "f230fh0g3",
+        name: "Bamboo Watch",
+        description: "Product Description",
+        image: '',
+        images: ["bamboo-watch.jpg"],
+        price: 65,
+        category: "Прочее",
+        status: 'new',
+        detail: [{
+            name: 'test',
+            type: 'array',
+            value: ['1', '2']
+        },{
+            name: 'test2',
+            type: 'color',
+            value: ['red', 'green']
+        },{
+            name: 'test3',
+            type: 'bool',
+            value: ['1', '2']
+        },{
+            name: 'test4',
+            type: 'any',
+            value: 'xro'
+        }]
+    }
 });

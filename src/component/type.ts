@@ -1,3 +1,9 @@
+export type Option = {
+    name: string
+    type: 'array'|'radio'|'any'|'bool'|'color'
+    value: Array<string|number> | string | boolean
+}
+
 export type Tovar = {
     id: number
     code: string
@@ -11,6 +17,7 @@ export type Tovar = {
     category: string
     status: 'new'|'action'|'favorite'
     timeshtamp: string|number
+    detail?: Option
 }
 
 export type ShowcaseProps = {

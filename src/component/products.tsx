@@ -41,12 +41,6 @@ export default function ListTovar() {
     const category = useHookstate(flags.category);
     const [products, setProducts] = React.useState(globalState.products.get());
 
-    const addShopCart =(data: Tovar)=> {
-        send('addShopingCart', {product: data}).then((res)=> {
-            if(res.error) useInfoToolbar("error", 'Ошибка', res.error);
-            else globalState.shopingCart.set(res);
-        });
-    }
     const useDetailProduct =(data: Tovar)=> {
         
     }
@@ -70,12 +64,6 @@ export default function ListTovar() {
                                 icon="pi pi-search"  
                                 disabled={!data.status}
                                 onClick={()=> useDetailProduct(data)}
-                            />
-                            <Button className='p-button-outlined p-button-success'
-                                icon="pi pi-shopping-cart" 
-                                label="В корзину" 
-                                disabled={!data.status}
-                                onClick={()=> addShopCart(data)}
                             />
                         </div>
                         <span>
@@ -119,12 +107,6 @@ export default function ListTovar() {
                             icon="pi pi-search"  
                             disabled={!data.status}
                             onClick={()=> useDetailProduct(data)}
-                        />
-                        <Button className='p-button-outlined p-button-success'
-                            icon="pi pi-shopping-cart" 
-                            label="В корзину" 
-                            disabled={!data.status}
-                            onClick={()=> addShopCart(data)}
                         />
                     </div>
                 </div>

@@ -15,3 +15,7 @@
 ::-webkit-scrollbar{
   width: 5px;
 }
+
+.product-grid-item {
+    color: red;
+}
