@@ -20,7 +20,7 @@ export type ShowcaseProps = {
 }
 
 export type LeftContainerProps = {
-    useView: (value: 'base'|'category'|'products'|'action')=> void
+    useView: (value: 'base'|'category'|'products'|'action'|'orders')=> void
 }
 
 export type ImageContainerProps = {
@@ -51,6 +51,7 @@ export type Order = {
     massage: string
     status: 'create' | 'panding' | 'complete' | 'travel' | 'cancel'
     data: Array<Tovar>
-    travel?: TravelMethod
-    pay?: PayMethod
+    adress?: string
+    travel?: TravelMethod   // id выбранного способа доставки
+    pay?: PayMethod         // id выбранного способа оплаты
 }

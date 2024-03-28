@@ -135,7 +135,7 @@ export const user = hookstate({
 });
 
 export const flags = hookstate({
-    view: 'order',
+    view: 'admin',
     category: undefined,
     viewAuth: false,
     viewAuthType: 'auth',

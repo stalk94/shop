@@ -1,11 +1,13 @@
 import React from 'react';
 import globalState from "../../global.state";
 import axios from 'axios';
-import { ImageContainerProps, Tovar } from "../type";
+import { ImageContainerProps, Tovar, Order } from "../type";
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import { Dropdown } from 'primereact/dropdown';
+import { InputTextarea } from 'primereact/inputtextarea';
 import { useInfoToolbar } from "../../function";
+import { useHookstate } from '@hookstate/core';
 
 // редактор и загрузчик картинок товаров 
 const ImageContainer =({images, image, useImage, useImages}: ImageContainerProps)=> {
@@ -227,6 +229,82 @@ export function AddProduct() {
             <div style={{marginTop:'5%'}}>
                 <Button className="p-button-outlined p-button-success" 
                     label='Добавить'
+                    icon="pi pi-check" 
+                    onClick={useFetch}
+                />
+            </div>
+        </div>
+    );
+}
+
+/**
+ * Редактор ордер деталей (админский)
+ */
+export function ReadOrder({order, useGetOrders}: {order: Order, useGetOrders: Function}) {
+    const travels = useHookstate(globalState.settings.travels);
+    const pays = useHookstate(globalState.settings.pays);
+    const statusOrders = ['create', 'panding', 'complete', 'travel', 'cancel'];
+    const [status, setStatus] = React.useState(order.status);
+    const [travel, setTravel] = React.useState(order.travel);
+    const [pay, setPay] = React.useState(order.pay);
+    const [massage, setMassage] = React.useState(order.massage);
+    const [adress, setAdress] = React.useState(order.adress);
+
+    const useSetTravel =(label: string)=> {
+        const find = travels.get().find((elem)=> elem.label===label);
+        if(find) setTravel(find);
+    }
+    const useSetPay =(label: string)=> {
+        const find = pays.get().find((elem)=> elem.label===label);
+        if(find) setPay(find);
+    }
+    const useFetch =()=> {
+        const data = {
+            id: order.id,
+            timeshtamp: order.timeshtamp,
+            author: order.author,
+            telephone: order.telephone,
+            massage: massage,
+            status: status,
+            data: order.data,
+            adress: adress,
+            travel: travel,
+            pay: pay 
+        }
+
+        send('readOrderAdmin', {order: data}).then((res)=> {
+            if(res.error) useInfoToolbar("error", 'Ошибка', res.error);
+            else useGetOrders();
+        });
+    }
+
+    return(
+        <div style={{display:'flex', flexDirection:'column'}}>
+            <span>Статус</span>
+            <Dropdown
+                value={status}
+                options={statusOrders}
+                onChange={(e)=> setStatus(e.value)}
+            />
+            <span>Способ доставки</span>
+            <Dropdown
+                value={travel?.label}
+                options={travels.get().map((elem)=> elem.label)}
+                onChange={(e)=> useSetTravel(e.value)}
+            />
+            <span>Адресс доставки</span>
+            <InputText value={adress} onChange={(e)=> setAdress(e.target.value)}/>
+            <span>Способ оплаты</span>
+            <Dropdown
+                value={pay?.label}
+                options={pays.get().map((elem)=> elem.label)}
+                onChange={(e)=> useSetPay(e.value)}
+            />
+            <span>Комментарий</span>
+            <InputTextarea rows={3} cols={30} value={massage} onChange={(e)=> setMassage(e.target.value)}/>
+            <div style={{marginTop:'5%'}}>
+                <Button className="p-button-outlined p-button-success" 
+                    label='Изменить'
                     icon="pi pi-check" 
                     onClick={useFetch}
                 />

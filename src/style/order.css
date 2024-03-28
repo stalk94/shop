@@ -28,3 +28,17 @@
 .travelHeader {
     padding: 0.5rem 0.5rem;
 }
+
+.infoOrder {
+    margin: 15px;
+}
+
+.label {
+    color: #bababaa8;
+}
+
+.segment {
+    padding: 5px;
+    margin-top: 3px;
+    border: 1px solid black;
+}

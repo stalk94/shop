@@ -15,7 +15,7 @@ const LeftContainer =({useView}: LeftContainerProps)=> {
         {label: 'Категории', icon: 'pi pi-fw pi-database', command:()=> useView('category')},
         {label: 'Товар', icon: 'pi pi-fw pi-shopping-cart', command:()=> useView('products')},
         {label: 'Акции', icon: 'pi pi-fw pi-star', command:()=> useView('action')},
-        {label: 'Заявки', icon: 'pi pi-fw pi-star', command:()=> useView('action')}
+        {label: 'Заявки', icon: 'pi pi-fw pi-shopping-cart', command:()=> useView('orders')}
     ];
 
 
@@ -24,7 +24,7 @@ const LeftContainer =({useView}: LeftContainerProps)=> {
 
 
 export default function BaseContainer() {
-    const [view, setView] = React.useState<'base'|'category'|'products'|'action'>('products');
+    const [view, setView] = React.useState<'base'|'category'|'products'|'action'|'orders'>('orders');
     const CategoryList = {
         base: <Base/>,
         category: <Category/>,
