@@ -7,12 +7,14 @@ import Category from './admin/category';
 import Action from './admin/action';
 import Base from './admin/base';
 import Orders from './admin/orders';
+import Options from './admin/options';
 
 
 const LeftContainer =({useView}: LeftContainerProps)=> {
     const items = [
         {label: 'Глобальные', icon: 'pi pi-fw pi-cog', command:()=> useView('base')},
         {label: 'Категории', icon: 'pi pi-fw pi-database', command:()=> useView('category')},
+        {label: 'Опции товаров', icon: 'pi pi-fw pi-link', command:()=> useView('options')},
         {label: 'Товар', icon: 'pi pi-fw pi-shopping-cart', command:()=> useView('products')},
         {label: 'Акции', icon: 'pi pi-fw pi-star', command:()=> useView('action')},
         {label: 'Заявки', icon: 'pi pi-fw pi-shopping-cart', command:()=> useView('orders')}
@@ -24,13 +26,14 @@ const LeftContainer =({useView}: LeftContainerProps)=> {
 
 
 export default function BaseContainer() {
-    const [view, setView] = React.useState<'base'|'category'|'products'|'action'|'orders'>('orders');
+    const [view, setView] = React.useState<'base'|'category'|'products'|'action'|'orders'>('options');
     const CategoryList = {
         base: <Base/>,
         category: <Category/>,
         products: <Products/>,
         action: <Action/>,
-        orders: <Orders/>
+        orders: <Orders/>,
+        options: <Options/>
     }
 
 

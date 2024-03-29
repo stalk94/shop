@@ -30,6 +30,27 @@ export default hookstate({
         },{
             label: 'Прочее',
             icon: 'gear'
+        }],
+        options: [{
+            name: 'test',
+            type: 'array',
+            category: 'Прочее',
+            value: ['1', '2']
+        },{
+            name: 'test2',
+            type: 'color',
+            category: 'Прочее',
+            value: ['red', '19f511']
+        },{
+            name: 'test3',
+            type: 'bool',
+            category: 'Проее',
+            value: ['1', '2']
+        },{
+            name: 'test4',
+            type: 'any',
+            category: 'Прочее',
+            value: 'xro'
         }]
     },
     products: [{
@@ -135,7 +156,7 @@ export const user = hookstate({
 });
 
 export const flags = hookstate({
-    view: 'product',
+    view: 'admin',
     category: undefined,
     viewAuth: false,
     viewAuthType: 'auth',
@@ -150,23 +171,6 @@ export const flags = hookstate({
         images: ["bamboo-watch.jpg"],
         price: 65,
         category: "Прочее",
-        status: 'new',
-        detail: [{
-            name: 'test',
-            type: 'array',
-            value: ['1', '2']
-        },{
-            name: 'test2',
-            type: 'color',
-            value: ['red', 'green']
-        },{
-            name: 'test3',
-            type: 'bool',
-            value: ['1', '2']
-        },{
-            name: 'test4',
-            type: 'any',
-            value: 'xro'
-        }]
+        status: 'new'
     }
 });

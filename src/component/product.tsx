@@ -15,12 +15,12 @@ const Options =({options, setValues, values}: {options: Array<Option>, setValues
         return <div style={{width:'15px',height:'15px',backgroundColor:option}}></div>
     }
     
-
+    
     return(
         <div className='options'>
             {options.map((elem, index)=> {
                 if(elem.type==='array') return(
-                    <div>
+                    <div key={index}>
                         <label>{elem.name}</label>
                         <Dropdown 
                             value={values[index].value} 
@@ -30,7 +30,7 @@ const Options =({options, setValues, values}: {options: Array<Option>, setValues
                     </div>
                 );
                 else if(elem.type==='bool') return(
-                    <div>
+                    <div key={index}>
                         <label>{elem.name}</label>
                         <SelectButton 
                             value={values[index].value} 
@@ -40,13 +40,13 @@ const Options =({options, setValues, values}: {options: Array<Option>, setValues
                     </div>
                 );
                 else if(elem.type==='any') return(
-                    <div>
+                    <div key={index}>
                         <label>{elem.name}</label>
                         { options[index].value }
                     </div>
                 );
                 else if(elem.type==='color') return(
-                    <div>
+                    <div key={index}>
                         <label>{elem.name}</label>
                         <SelectButton 
                             value={values[index].value} 
@@ -66,7 +66,7 @@ const Options =({options, setValues, values}: {options: Array<Option>, setValues
 export default function Product() {
     const product = useHookstate(flags.productView);
     const [count, setCount] = React.useState<number>(1);
-    const [values, setValues] = React.useState(product.detail.get());
+    const [values, setValues] = React.useState(globalState.settings.options.get());
 
     const addShopCart =()=> {
         const data = JSON.parse(JSON.stringify(product.get()));
@@ -86,15 +86,20 @@ export default function Product() {
             });
         });
     }
+    const useFilter =()=> {
+        const options = globalState.settings.options.get();
+        return options.filter((elem)=> elem.category===product.category.get());
+    }
     React.useEffect(()=> {
         const result = [];
-        JSON.parse(JSON.stringify(product.detail.get())).forEach((elem)=> {
+        JSON.parse(JSON.stringify(useFilter())).forEach((elem)=> {
             elem.value = undefined;
             result.push(elem);
-        })
+        });
         setValues(result);
     }, []);
 
+    
     return(
         <div className='container'>
             <div className='leftContainer'>
@@ -124,7 +129,7 @@ export default function Product() {
                 <div className='description'>
                     { product.description.get() }
                 </div>
-                <Options options={product.detail.get()} setValues={useSetState} values={values}/>
+                <Options options={useFilter()} setValues={useSetState} values={values}/>
                 <Button 
                     className='p-button-outlined p-button-success'
                     icon="pi pi-shopping-cart"

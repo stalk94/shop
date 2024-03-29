@@ -1,6 +1,7 @@
 export type Option = {
     name: string
     type: 'array'|'radio'|'any'|'bool'|'color'
+    category: string
     value: Array<string|number> | string | boolean
 }
 
@@ -17,7 +18,6 @@ export type Tovar = {
     category: string
     status: 'new'|'action'|'favorite'
     timeshtamp: string|number
-    detail?: Option
 }
 
 export type ShowcaseProps = {
@@ -27,7 +27,7 @@ export type ShowcaseProps = {
 }
 
 export type LeftContainerProps = {
-    useView: (value: 'base'|'category'|'products'|'action'|'orders')=> void
+    useView: (value: 'base'|'category'|'products'|'action'|'orders'|'options')=> void
 }
 
 export type ImageContainerProps = {
