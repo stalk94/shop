@@ -15,6 +15,13 @@ const localisation = {ru: '₽',ua: '₴',br: 'Br'}
 export default function BaseContainer() {
     const shopingCart = useHookstate(globalState.shopingCart);
 
+    // => delShopingCart
+    const onDelete =(element: Tovar|'all')=> {
+        send('delShopingCart', {product:element}).then((res)=> {
+            if(res.error) useInfoToolbar("error", 'Ошибка', res.error);
+            else shopingCart.set(res);
+        });
+    }
     // переход к странице оплаты
     const onPay =()=> {
         if(user.login.get()) flags.view.set('order');
@@ -23,12 +30,6 @@ export default function BaseContainer() {
             flags.viewAuth.set(true);
             useInfoToolbar('warn', 'Не авторизирован', 'Необходимо сперва авторизироваться либо пройти регистрацию');
         }
-    }
-    const onDelete =(element: Tovar|'all')=> {
-        send('delShopingCart', {product:element}).then((res)=> {
-            if(res.error) useInfoToolbar("error", 'Ошибка', res.error);
-            else shopingCart.set(res);
-        });
     }
     const getTotal =()=> {
         let result = 0;

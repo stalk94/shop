@@ -15,6 +15,7 @@ export default function BaseContainer() {
     const [telephone, setTelephone] = React.useState<string>();
     const [password, setPassword] = React.useState<string>();
 
+    // => auth | reg
     const authUser =()=> {
         send(state.viewAuthType.get(), {login:login,password:password,telephone:telephone}).then((res)=> {
             if(res.error) useInfoToolbar("error", 'Ошибка', res.error);

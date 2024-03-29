@@ -1,6 +1,6 @@
 import React from 'react';
 import "../../style/order.css";
-import { Order, Tovar } from "../type";
+import { Order, Option } from "../type";
 import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
 import { Button } from 'primereact/button';
@@ -19,7 +19,23 @@ const ListTovar =({order}: {order: Order})=> {
         if(find) return find.count;
         else return 'ошибка';
     }
-    
+    const justifyTemplate =(options: Array<Option>)=> {
+        return options.map((option: Option, index)=> {
+            if(option.type==='array'||option.type==='bool') return(
+                <div key={index} style={{display:'flex'}}>
+                    <var style={{color:'gray', marginRight:'7px'}}>{ option.name + ': ' }</var>
+                    <div>{ option.value[0] }</div>
+                </div>
+            );
+            else if(option.type==='color') return(
+                <div key={index} style={{display:'flex'}}>
+                    <var style={{color:'gray', marginRight:'7px'}}>{ option.name + ': ' }</var>
+                    <div style={{width:'15px',height:'15px',backgroundColor:option.value[0],marginRight:'2px'}}/>
+                </div>
+            );
+        });
+    }
+
 
     return (
         <DataTable
@@ -35,8 +51,13 @@ const ListTovar =({order}: {order: Order})=> {
             } />
             <Column field="name" header="Название" />
             <Column field="price" header="Стоимость" />
-            <Column header="Текущий остаток" 
+            <Column 
+                header="Текущий остаток" 
                 body={(data)=> getCountProduct(data.id)} 
+            />
+            <Column 
+                header="Параметры" 
+                body={(data)=> justifyTemplate(data.options)} 
             />
         </DataTable>
     );
@@ -79,11 +100,17 @@ const InfoOrder =({order}: {order: Order})=> {
 }
 
 
-
 export default function BaseContainer() {
     const [orders, setOrders] = React.useState<Array<Order>>([]);
     const [viewModal, setViewModal] = React.useState<boolean>(false);
     
+    // => getOrders
+    const getOrders =()=> {
+        send('getOrders', {}).then((res)=> {
+            if(res.error) useInfoToolbar("error", 'Ошибка', res.error);
+            else setOrders(res);
+        });
+    }
     // title статусов заказа
     const getStatus = (status: string) => {
         if (status === 'create') return (
@@ -112,13 +139,7 @@ export default function BaseContainer() {
             </div>
         );
     }
-    const getOrders =()=> {
-        send('getOrders', {}).then((res)=> {
-            if(res.error) useInfoToolbar("error", 'Ошибка', res.error);
-            else setOrders(res);
-        });
-    }
-    React.useEffect(()=> getOrders());
+    React.useEffect(()=> getOrders(), []);
 
 
     return(
@@ -156,7 +177,7 @@ export default function BaseContainer() {
 }
 
 /**
- * setOrders([{
+setOrders([{
             id: 0,
             timeshtamp: '14.03.2024 18:40',
             author: 'test',
@@ -172,17 +193,28 @@ export default function BaseContainer() {
                 image: ["bamboo-watch.jpg"],
                 price: 65,
                 category: "Прочее",
-                status: true
-            }],
-            travel: {
-                id: 0,
-                value: 0,
-                label: 'Самовывоз',
-                description: 'Самовывоз с нашего склада в хащах'
-            },
-            pay: {
-                label: 'Наложенный платеж'
-            },
-            adress: 'улица Залуп 4'
+                status: true,
+                options: [{
+                    name: 'test',
+                    type: 'array',
+                    category: 'Прочее',
+                    value: ['1', '2']
+                },{
+                    name: 'test2',
+                    type: 'color',
+                    category: 'Прочее',
+                    value: ['red', '19f511']
+                },{
+                    name: 'test3',
+                    type: 'bool',
+                    category: 'Прочее',
+                    value: ['1', '2']
+                },{
+                    name: 'test4',
+                    type: 'any',
+                    category: 'Прочее',
+                    value: 'xro'
+                }]
+            }]
         }])
  */

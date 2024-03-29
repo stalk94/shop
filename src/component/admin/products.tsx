@@ -17,15 +17,16 @@ export default function Products() {
     const [viewAddModal, setViewAddModal] = React.useState<boolean>(false);
     const [viewModal, setViewModal] = React.useState<boolean>(false);
 
-    const useReadProduct =(product: Tovar)=> {
-        setCurent(product);
-        setViewModal(true);
-    }
-    const useDelete =(product: Tovar)=> {
+    // => deleteProduct
+    const useFetchDelete =(product: Tovar)=> {
         send('deleteProduct', {product: product}).then((res)=> {
             if(res.error) useInfoToolbar("error", 'Ошибка', res.error);
             else products.set(res);
         });
+    }
+    const useReadProduct =(product: Tovar)=> {
+        setCurent(product);
+        setViewModal(true);
     }
     const countProduct =(product: Tovar)=> {
         if(product.count < 1) return <div style={{color:'red'}}>
@@ -77,7 +78,7 @@ export default function Products() {
                 <Column body={(data)=> 
                     <>
                         <Button className="p-button-outlined" icon="pi pi-pencil" onClick={(e)=> useReadProduct(data)}/>
-                        <Button style={{marginLeft:'5px'}} className="p-button-outlined p-button-danger" icon="pi pi-trash" onClick={()=> useDelete(data)}/>
+                        <Button style={{marginLeft:'5px'}} className="p-button-outlined p-button-danger" icon="pi pi-trash" onClick={()=> useFetchDelete(data)}/>
                     </>
                 }/>
             </DataTable>

@@ -1,6 +1,6 @@
 import React from 'react';
 import "../style/order.css";
-import { Order, Tovar, TravelMethod, PayMethod } from "./type";
+import { Order, Tovar, PayMethod } from "./type";
 import globalState, { user } from "../global.state";
 import { useHookstate } from '@hookstate/core';
 import { Column } from 'primereact/column';
@@ -158,6 +158,7 @@ const Wrapper =({order}: {order: Order})=> {
     const [curentTravelMethod, setTravelMethod] = React.useState<number>();
     const [telephone, setTelephone] = React.useState<string>(user.telephone.get());
 
+    // => orderRead
     const fetchReadOrder =(status: string)=> {
         const data = {
             id: order.id,
@@ -217,7 +218,7 @@ export default function ListOrders() {
     const orders = useHookstate(globalState.orders);
 
     // title статусов заказа
-    const getStatus = (status: string) => {
+    const getStatus =(status: string)=> {
         if (status === 'create') return (
             <div style={{ color: 'orange', marginLeft:'100px'}}>
                 Не оплачен (в обработке)

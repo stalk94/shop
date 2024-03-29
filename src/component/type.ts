@@ -2,7 +2,7 @@ export type Option = {
     name: string
     type: 'array'|'radio'|'any'|'bool'|'color'
     category: string
-    value: Array<string|number> | string | boolean
+    value: Array<string | number> | string 
 }
 
 export type Tovar = {
@@ -18,6 +18,7 @@ export type Tovar = {
     category: string
     status: 'new'|'action'|'favorite'
     timeshtamp: string|number
+    options?: Array<Option>
 }
 
 export type ShowcaseProps = {

@@ -9,7 +9,9 @@ import { InputTextarea } from 'primereact/inputtextarea';
 import { useInfoToolbar } from "../../function";
 import { useHookstate } from '@hookstate/core';
 
-// редактор и загрузчик картинок товаров 
+/**
+ * редактор и загрузчик картинок товаров 
+ */
 const ImageContainer =({images, image, useImage, useImages}: ImageContainerProps)=> {
     const addImage =()=> {
         const element = document.createElement("input");
@@ -80,6 +82,7 @@ export function ReadProduct({product}: {product: Tovar}) {
     const [category, setCategory] = React.useState(product.category);
     const [description, setDescription] = React.useState(product.description);
 
+    // => readProduct
     const useFetch =()=> {
         const data = {
             id: product.id,
@@ -164,6 +167,7 @@ export function AddProduct() {
     const [status, setStatus] = React.useState<'new'|'action'|'favorite'>('new');
     const [category, setCategory] = React.useState<string>();
 
+    // => addProduct
     const useFetch =()=> {
         const data = {
             name: name,
@@ -250,14 +254,7 @@ export function ReadOrder({order, useGetOrders}: {order: Order, useGetOrders: Fu
     const [massage, setMassage] = React.useState(order.massage);
     const [adress, setAdress] = React.useState(order.adress);
 
-    const useSetTravel =(label: string)=> {
-        const find = travels.get().find((elem)=> elem.label===label);
-        if(find) setTravel(find);
-    }
-    const useSetPay =(label: string)=> {
-        const find = pays.get().find((elem)=> elem.label===label);
-        if(find) setPay(find);
-    }
+    // => readOrderAdmin
     const useFetch =()=> {
         const data = {
             id: order.id,
@@ -277,6 +274,15 @@ export function ReadOrder({order, useGetOrders}: {order: Order, useGetOrders: Fu
             else useGetOrders();
         });
     }
+    const useSetTravel =(label: string)=> {
+        const find = travels.get().find((elem)=> elem.label===label);
+        if(find) setTravel(find);
+    }
+    const useSetPay =(label: string)=> {
+        const find = pays.get().find((elem)=> elem.label===label);
+        if(find) setPay(find);
+    }
+
 
     return(
         <div style={{display:'flex', flexDirection:'column'}}>

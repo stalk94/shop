@@ -2,15 +2,21 @@ import React from 'react';
 import "../style/product.css";
 import globalState, { flags } from "../global.state";
 import { useHookstate } from '@hookstate/core';
-import { Tovar, Option } from "./type";
+import { Option } from "./type";
 import { Button } from 'primereact/button';
 import { Dropdown } from 'primereact/dropdown';
 import { SelectButton } from 'primereact/selectbutton';
 import { Carousel } from 'primereact/carousel';
 import { useInfoToolbar } from "../function";
 
+type OptionsProps = {
+    options: Array<Option>
+    setValues: (index: number, value: any)=> void
+    values: Array<Option>
+}
 
-const Options =({options, setValues, values}: {options: Array<Option>, setValues: Function})=> {
+// Надо привести стили в порядок !
+const Options =({options, setValues, values}: OptionsProps)=> {
     const justifyTemplate =(option: string)=> {
         return <div style={{width:'15px',height:'15px',backgroundColor:option}}></div>
     }
@@ -62,15 +68,16 @@ const Options =({options, setValues, values}: {options: Array<Option>, setValues
     );
 }
 
-
+// Надо привести стили в порядок !
 export default function Product() {
     const product = useHookstate(flags.productView);
     const [count, setCount] = React.useState<number>(1);
     const [values, setValues] = React.useState(globalState.settings.options.get());
 
-    const addShopCart =()=> {
+    // => addShopingCart
+    const fetchAddShopCart =()=> {
         const data = JSON.parse(JSON.stringify(product.get()));
-        data.detail = values;
+        data.options = values;
         data.count = count;
 
         send('addShopingCart', {product: data}).then((res)=> {
@@ -135,7 +142,7 @@ export default function Product() {
                     icon="pi pi-shopping-cart"
                     label="В корзину"
                     disabled={product.count.get()<1 ? true: false}
-                    onClick={() => addShopCart()}
+                    onClick={() => fetchAddShopCart()}
                 />
             </div>
         </div>

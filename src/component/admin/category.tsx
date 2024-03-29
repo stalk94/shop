@@ -27,16 +27,6 @@ export const iconsList = {
 };
 
 
-
-//Привязка пользовательских параметров товара к категории
-const CustomParam =()=> {
-    return(
-        <>
-        </>
-    );
-}
-
-
 export default function Category() {
     const [name, setName] = React.useState<string>('');
     const [icon, setIcon] = React.useState<string>('standart');
@@ -44,7 +34,8 @@ export default function Category() {
     const category = useHookstate(globalState.settings.category);
     const addCategoryRef = React.useRef(null);
 
-    const addCategory =()=> {
+    // => addCategory
+    const fetchAddCategory =()=> {
         send('addCategory', {category: {label: name, icon: icon}}).then((res)=> {
             if(res.error) useInfoToolbar("error", 'Ошибка', res.error);
             else category.set(res);
@@ -77,7 +68,7 @@ export default function Category() {
                         className="p-button-outlined p-button-success" 
                         label='Добавить'
                         icon="pi pi-plus" 
-                        onClick={addCategory}
+                        onClick={fetchAddCategory}
                     />
                 </div>
             </OverlayPanel>
